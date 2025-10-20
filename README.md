@@ -34,7 +34,7 @@ O **diagrama EER** foi desenvolvido no MySQL Workbench, representando a estrutur
 
 Nesta etapa foi definido o **esquema lógico** e implementadas todas as tabelas com suas respectivas **chaves primárias, estrangeiras e constraints**.
 
-📄 Arquivo: [`sql/esquema_logico.sql`](sql/esquema_logico.sql)
+📄 Arquivo: [`sql/esquema_logico.sql`](sql/esquema_logico_oficina.sql)
 
 ### 🧱 Estrutura Geral:
 - `clients`, `client_pf`, `client_pj` → Especialização de clientes pessoa física e jurídica  
