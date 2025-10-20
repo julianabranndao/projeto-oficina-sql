@@ -90,24 +90,7 @@ COMMIT;
 
 ---
 
-## 📁 Estrutura do Repositório
-
-```text
-/projeto-oficina-sql
-│
-├── docs/
-│   ├── EER_Oficina.pdf
-│   └── EER_Oficina.png
-│
-├── sql/
-│   ├── esquema_logico.sql
-│   ├── inserts_data_oficina.sql
-│   └── queries_oficina.sql
-│
-└── README.md
-```
-
-## 🧠 Etapa 4 – Consultas SQL (Análises)
+## 🧠 Consultas SQL (Análises)
 
 Foram desenvolvidas consultas SQL para **análise e validação do banco de dados**, aplicando **JOINs**, **agrupamentos**, **condições**, **expressões derivadas** e **funções agregadas**.
 
@@ -127,6 +110,26 @@ Foram desenvolvidas consultas SQL para **análise e validação do banco de dado
 - Criação de **atributos derivados** (`ROUND`, `CASE`, `SUM`)  
 - Filtros em grupos com **HAVING**  
 - Ordenação e filtragem com **ORDER BY**, **WHERE**, **DISTINCT**
+
+---
+
+## 📁 Estrutura do Repositório
+
+```text
+/projeto-oficina-sql
+│
+├── docs/
+│   ├── EER_Oficina.pdf
+│   └── EER_Oficina.png
+│
+├── sql/
+│   ├── esquema_logico.sql
+│   ├── inserts_data_oficina.sql
+│   └── queries_oficina.sql
+│
+└── README.md
+```
+---
 
 ### 🧠 Autor
 Juliana Brandão
