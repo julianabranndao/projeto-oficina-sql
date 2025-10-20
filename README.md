@@ -1,105 +1,133 @@
-🧰 Projeto SQL — Oficina Mecânica
-🧩 Descrição Geral
+# 🧰 Projeto de Banco de Dados – Oficina Mecânica (MySQL)
 
-Projeto de modelagem e implementação de um banco de dados relacional para uma Oficina Mecânica, cobrindo:
+## 📘 Descrição Geral
 
-Modelo lógico (EER) coerente com operações reais de oficina
+Este projeto implementa o **modelo lógico de um sistema de Oficina Mecânica**, construído com base em boas práticas de modelagem relacional e normalização.  
+O objetivo é representar o funcionamento real de uma oficina, permitindo o gerenciamento de **clientes (PF/PJ)**, **veículos**, **ordens de serviço (OS)**, **serviços**, **peças**, **mecânicos**, **fornecedores**, **pagamentos** e **agendamentos**.
 
-Criação do esquema SQL (DDL)
+Além da criação do esquema físico no MySQL, o projeto inclui **inserção de dados genéricos de teste** e **consultas SQL complexas** para validação e análise do modelo.
 
-Inserção de dados (DML)
+---
 
-Consultas SQL com SELECT, WHERE, JOIN, GROUP BY, HAVING e ORDER BY
+## 📊 Modelagem EER
 
-📂 Estrutura do Repositório
-/projeto-oficina-sql
-├── sql/
-│   ├── esquema_logico.sql
-│   ├── inserts_data_oficina.sql
-│   └── queries_oficina.sql
-├── docs/
-│   ├── EER_Oficina.png
-│   └── EER_Oficina.pdf
-└── README.md
+O **diagrama EER** foi desenvolvido no MySQL Workbench, representando a estrutura lógica completa do sistema de oficina.
 
-🗄️ Modelo Lógico (EER)
+📷 Inclui:
+- Clientes PF/PJ com especialização de atributos  
+- Veículos vinculados a seus proprietários  
+- Ordens de Serviço (OS) como núcleo do processo operacional  
+- Serviços e Peças como entidades independentes e associadas à OS  
+- Mecânicos e sua alocação por OS (relação N:N)  
+- Fornecedores e relação de peças por fornecedor  
+- Pagamentos (relação 1:1 com cada OS)  
+- Agendamentos prévios vinculados aos clientes
 
-Arquivos disponíveis:
+🧠 O diagrama foi exportado em **PDF** e **PNG** como referência visual do modelo lógico.
 
-docs/EER_Oficina.png
+📄 Arquivos: [`docs/EER_Oficina.pdf`](docs/EER_Oficina.pdf)  
+             [`docs/EER_Oficina.png`](docs/EER_Oficina.png)
 
-docs/EER_Oficina.pdf
+---
 
-O modelo contempla:
+## 🧩 Criação do Banco e Estrutura Base
 
-Clientes (PF/PJ) com especializações
+Nesta etapa foi definido o **esquema lógico** e implementadas todas as tabelas com suas respectivas **chaves primárias, estrangeiras e constraints**.
 
-Veículos vinculados a clientes
+📄 Arquivo: [`sql/esquema_logico.sql`](sql/esquema_logico.sql)
 
-Ordens de Serviço (OS) como núcleo do processo
+### 🧱 Estrutura Geral:
+- `clients`, `client_pf`, `client_pj` → Especialização de clientes pessoa física e jurídica  
+- `vehicles` → Cadastro de veículos e vínculo com seus respectivos clientes  
+- `services`, `parts` → Catálogo de serviços e peças disponíveis  
+- `orders` → Ordens de Serviço com status, data e valor total  
+- `mechanics` → Registro de mecânicos e suas especialidades  
+- `order_mechanic`, `order_service`, `order_part` → Tabelas de relacionamento N:N  
+- `suppliers` → Cadastro de fornecedores de peças  
+- `supplier_part` → Relação de peças fornecidas por cada fornecedor  
+- `payments` → Pagamentos referentes a cada OS  
+- `schedules` → Agendamentos prévios de atendimento
 
-Serviços e Peças no catálogo
+### ⚙️ Regras Implementadas:
+- **Integridade referencial total** com `ON UPDATE CASCADE` e `ON DELETE RESTRICT`  
+- **ENUMs padronizados** para status de OS e formas de pagamento  
+- **CHECK constraints** para validar valores numéricos e datas  
+- **Relacionamentos N:N** tratados por tabelas intermediárias  
+- **Normalização** até 3FN para evitar redundâncias  
 
-Mecânicos e sua alocação por OS
+---
 
-Fornecedores e relação de peças por fornecedor
+## 💾 Inserção de Dados
 
-Pagamentos (1:1 com OS)
+Nesta etapa foi realizada a **população do banco** com dados genéricos de teste, abrangendo todas as tabelas do modelo.
 
-Agendamentos (pré-OS)
+📄 Arquivo: [`sql/inserts_data_oficina.sql`](sql/inserts_data_oficina.sql)
 
-🧱 Criação do Esquema (DDL)
+### 🔍 Estrutura e Conteúdo:
+- **Clientes (clients)**: 6 registros entre PF e PJ  
+- **Veículos (vehicles)**: 8 veículos vinculados a clientes distintos  
+- **Serviços e Peças**: catálogo genérico para testes de OS  
+- **Mecânicos**: equipe com especializações distintas  
+- **Ordens de Serviço (orders)**: ordens abertas, em andamento e concluídas  
+- **Pagamentos**: registros de valores pagos e pendentes  
+- **Fornecedores e Peças**: vinculação direta via tabela intermediária  
+- **Agendamentos**: simulação de pré-cadastros para futuras OS  
 
-Script de criação do banco de dados (tabelas, chaves, tipos e constraints):
-sql/esquema_logico.sql
+---
 
-🌱 Inserção de Dados (DML)
+## ⚙️ Estrutura Transacional
 
-Conjunto de INSERTs com dados genéricos para testes e validação:
-sql/inserts_data_oficina.sql
+Transações SQL garantem execução **atômica e segura** durante a inserção dos dados:
 
-Estrutura Transacional
-
-Transações SQL garantem execução atômica e segura durante as inserções:
-
+```sql
 START TRANSACTION;
 
 -- Blocos de inserção de dados
 
 COMMIT;
+```
+🔒 Caso algum erro ocorra durante a execução, nenhum dado é gravado parcialmente, garantindo integridade total do banco.
 
+---
 
-🔒 Se algo falhar no meio, nada é gravado parcialmente, garantindo integridade total dos dados.
+## 📁 Estrutura do Repositório
 
-🔎 Consultas SQL (Análises)
+```text
+/projeto-oficina-sql
+│
+├── docs/
+│   ├── EER_Oficina.pdf
+│   └── EER_Oficina.png
+│
+├── sql/
+│   ├── esquema_logico.sql
+│   ├── inserts_data_oficina.sql
+│   └── queries_oficina.sql
+│
+└── README.md
+```
 
-Consultas criadas para validação e análise do banco de dados:
-sql/queries_oficina.sql
+## 🧠 Etapa 4 – Consultas SQL (Análises)
 
-Exemplos de Consultas
+Foram desenvolvidas consultas SQL para **análise e validação do banco de dados**, aplicando **JOINs**, **agrupamentos**, **condições**, **expressões derivadas** e **funções agregadas**.
 
-Quantas OS cada cliente possui (JOIN, GROUP BY)
+📄 **Arquivo:** [`sql/queries_oficina.sql`](sql/queries_oficina.sql)
 
-Mecânicos com mais de 3 serviços executados (HAVING)
+### 🔍 Consultas Implementadas
+1. **Quantas OS cada cliente possui** (`JOIN`, `GROUP BY`)  
+2. **Mecânicos com mais de 3 serviços executados** (`GROUP BY`, `HAVING`)  
+3. **Peças em baixo estoque** (`CASE WHEN`)  
+4. **Pagamentos pendentes e confirmados** (`WHERE`, `ORDER BY`)  
+5. **Lucro estimado por serviço** (expressões derivadas)  
+6. **Serviços mais solicitados por período** (`GROUP BY`, `COUNT`)  
+7. **Relação entre fornecedores e peças** (`INNER JOIN`)  
 
-Peças em baixo estoque (CASE WHEN)
+### 🧩 Conceitos Aplicados
+- Uso de **INNER e LEFT JOINs** para relacionar tabelas  
+- Criação de **atributos derivados** (`ROUND`, `CASE`, `SUM`)  
+- Filtros em grupos com **HAVING**  
+- Ordenação e filtragem com **ORDER BY**, **WHERE**, **DISTINCT**
 
-Pagamentos pendentes e confirmados (WHERE, ORDER BY)
-
-Lucro estimado por serviço (expressões derivadas)
-
-🛠️ Tecnologias & Padrões
-
-MySQL 8 / MySQL Workbench 8
-
-Modelo EER (Crow’s Foot Notation)
-
-SQL padrão (DDL, DML, DQL)
-
-Boas práticas de PK/FK, check constraints, enums e normalização
-
-👩🏻‍💻 Autoria
-
-Projeto desenvolvido por Juliana Brandão
-
-Desafio DIO — Modelagem e Banco de Dados: Oficina Mecânica
+### 🧠 Autor
+Juliana Brandão
+💼 Analista de Dados 📧 contato: (https://www.linkedin.com/in/julianabrandaosv/)
