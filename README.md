@@ -61,7 +61,7 @@ Nesta etapa foi definido o **esquema lógico** e implementadas todas as tabelas 
 
 Nesta etapa foi realizada a **população do banco** com dados genéricos de teste, abrangendo todas as tabelas do modelo.
 
-📄 Arquivo: [`sql/inserts_data_oficina.sql`](sql/inserts_data_oficina.sql)
+📄 Arquivo: [`sql/inserts_data_oficina.sql`](sql/inserts_oficina.sql)
 
 ### 🔍 Estrutura e Conteúdo:
 - **Clientes (clients)**: 6 registros entre PF e PJ  
